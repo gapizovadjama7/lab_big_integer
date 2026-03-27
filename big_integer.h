@@ -49,7 +49,7 @@ private:
     bool neg; 
     static const int B = 1000000000; 
 
-    void fix(); // убираем лишние нули
+    void fix(); 
     int cmp_abs(const BigInteger& other) const; 
     void plus_abs(const BigInteger& other);
     void minus_abs(const BigInteger& other); 

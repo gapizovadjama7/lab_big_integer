@@ -45,12 +45,12 @@ public:
     explicit operator bool() const;
 
 private:
-    std::vector<int> v; // вектор для хранения цифр
-    bool neg;           // переменная для знака (true если минус)
-    static const int B = 1000000000; // основание системы (миллиард)
+    std::vector<int> v; 
+    bool neg; 
+    static const int B = 1000000000; 
 
     void fix(); // убираем лишние нули
-    int cmp_abs(const BigInteger& other) const; // сравниваем числа без знака
-    void plus_abs(const BigInteger& other); // складываем без знака
-    void minus_abs(const BigInteger& other); // вычитаем без знака
+    int cmp_abs(const BigInteger& other) const; 
+    void plus_abs(const BigInteger& other);
+    void minus_abs(const BigInteger& other); 
 };

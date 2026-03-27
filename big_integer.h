@@ -6,71 +6,51 @@
 
 class BigInteger {
 public:
-    // ======================== Constructors ========================
+    BigInteger();
+    BigInteger(int val);
+    BigInteger(long long val);
+    explicit BigInteger(const std::string& s);
 
-    BigInteger();                          // Default (value 0)
-    BigInteger(int value);                 // From int
-    BigInteger(long long value);           // From long long
-    explicit BigInteger(const std::string& str);  // From string, e.g. "123456789"
+    BigInteger operator+ (const BigInteger& b) const;
+    BigInteger operator- (const BigInteger& b) const;
+    BigInteger operator* (const BigInteger& b) const;
+    BigInteger operator/ (const BigInteger& b) const;
+    BigInteger operator% (const BigInteger& b) const;
 
-    // =================== Copy =====================================
+    BigInteger& operator+=(const BigInteger& b);
+    BigInteger& operator-=(const BigInteger& b);
+    BigInteger& operator*=(const BigInteger& b);
+    BigInteger& operator/=(const BigInteger& b);
+    BigInteger& operator%=(const BigInteger& b);
 
-    BigInteger(const BigInteger& other)            = default;
-    BigInteger& operator=(const BigInteger& other) = default;
+    bool operator==(const BigInteger& b) const;
+    bool operator!=(const BigInteger& b) const;
+    bool operator< (const BigInteger& b) const;
+    bool operator> (const BigInteger& b) const;
+    bool operator<=(const BigInteger& b) const;
+    bool operator>=(const BigInteger& b) const;
 
-    // ==================== Arithmetic ==============================
+    BigInteger operator-() const;
+    BigInteger& operator++();
+    BigInteger operator++(int);
+    BigInteger& operator--();
+    BigInteger operator--(int);
 
-    BigInteger  operator+ (const BigInteger& rhs) const;
-    BigInteger  operator- (const BigInteger& rhs) const;
-    BigInteger  operator* (const BigInteger& rhs) const;
-    BigInteger  operator/ (const BigInteger& rhs) const;
-    BigInteger  operator% (const BigInteger& rhs) const;
+    friend std::ostream& operator<<(std::ostream& os, const BigInteger& val);
+    friend std::istream& operator>>(std::istream& is, BigInteger& val);
 
-    BigInteger& operator+=(const BigInteger& rhs);
-    BigInteger& operator-=(const BigInteger& rhs);
-    BigInteger& operator*=(const BigInteger& rhs);
-    BigInteger& operator/=(const BigInteger& rhs);
-    BigInteger& operator%=(const BigInteger& rhs);
-
-    // ====================== Unary ================================
-
-    BigInteger  operator-() const;         // Unary minus
-
-    BigInteger& operator++();              // Prefix increment
-    BigInteger  operator++(int);           // Postfix increment
-    BigInteger& operator--();              // Prefix decrement
-    BigInteger  operator--(int);           // Postfix decrement
-
-    // ======================= Comparison ==========================
-
-    bool operator==(const BigInteger& rhs) const;
-    bool operator!=(const BigInteger& rhs) const;
-    bool operator< (const BigInteger& rhs) const;
-    bool operator> (const BigInteger& rhs) const;
-    bool operator<=(const BigInteger& rhs) const;
-    bool operator>=(const BigInteger& rhs) const;
-
-    // ======================== Misc ===============================
-
-    std::string to_string() const;         // Convert to string
-    bool is_zero() const;                  // Check if zero
-    bool is_negative() const;              // Check sign
-
-    explicit operator bool() const;        // true if != 0
-
-    // ======================== I/O ================================
-
-    friend std::ostream& operator<<(std::ostream& os, const BigInteger& value);
-    friend std::istream& operator>>(std::istream& is, BigInteger& value);
+    std::string to_string() const;
+    bool is_zero() const;
+    bool is_negative() const;
+    explicit operator bool() const;
 
 private:
-    // ============================================================
-    //  Internal representation is up to the student.
-    //  Example: a vector of digits + a sign flag.
-    //  Students MAY change the private section, but the public
-    //  interface MUST NOT be modified.
-    // ============================================================
+    std::vector<int> v; // вектор для хранения цифр
+    bool neg;           // переменная для знака (true если минус)
+    static const int B = 1000000000; // основание системы (миллиард)
 
-    std::vector<int> digits_;  // digits (least significant first)
-    bool negative_ = false;    // true if the number is negative
+    void fix(); // убираем лишние нули
+    int cmp_abs(const BigInteger& other) const; // сравниваем числа без знака
+    void plus_abs(const BigInteger& other); // складываем без знака
+    void minus_abs(const BigInteger& other); // вычитаем без знака
 };
